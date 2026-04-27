@@ -1,3 +1,11 @@
+[user]
+	name = kxue43
+	email = xueke.kent@gmail.com
+	signingkey = 5EF2BE73370DCE7E808814DBC9EED408F4B6D021
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
 [core]
 	editor = vim
 [init]
@@ -24,10 +32,4 @@
 	wta = worktree add
 	wtr = worktree remove
 [include]
-	path = .gitconfig.local
-[includeIf "gitdir:~/.config/"]
-	path = .gitconfig.personal
-[includeIf "gitdir:~/temp/"]
-	path = .gitconfig.personal
-[includeIf "gitdir:~/ascending/"]
-	path = .gitconfig.personal
+	path = .gitconfig.override

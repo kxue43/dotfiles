@@ -20,7 +20,6 @@ main() {
     .kxue43.bashrc
     .ascd.bashrc
     .gitconfig
-    .gitconfig.personal
     .vimrc
     .gvimrc
     .tmux.conf
@@ -69,7 +68,7 @@ main() {
 
   # Disable Git commit signing in devcontainer.
   if [ "$(whoami)" = "vscode" ]; then
-    cat >"$HOME/.gitconfig.local" <<'EOF'
+    cat >"$HOME/.gitconfig.override" <<'EOF'
 [user]
 	name = kxue43
 	email = xueke.kent@gmail.com
