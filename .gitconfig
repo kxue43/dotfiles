@@ -1,0 +1,33 @@
+[core]
+	editor = vim
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true
+	pruneTags = true
+[submodule]
+	recurse = true
+[push]
+	recurseSubmodules = check
+[alias]
+	smu = submodule update --init --recursive
+	sms = submodule status
+	sma = submodule add
+	lgl = log --graph --oneline --decorate-refs=refs/heads
+	lgb = log --graph --oneline --branches
+	lga = log --graph --oneline --all
+	lgmh = "!f() { git log --oneline \"${1:-main}\"..HEAD; }; f"
+	fp = fetch origin --prune --prune-tags
+	df = diff
+	dfc = diff --cached
+	wtl = worktree list
+	wta = worktree add
+	wtr = worktree remove
+[include]
+	path = .gitconfig.local
+[includeIf "gitdir:~/.config/"]
+	path = .gitconfig.personal
+[includeIf "gitdir:~/temp/"]
+	path = .gitconfig.personal
+[includeIf "gitdir:~/ascending/"]
+	path = .gitconfig.personal

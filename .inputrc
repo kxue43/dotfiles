@@ -1,0 +1,19 @@
+# Up and Down arrow key.
+"\e[A": previous-history
+"\e[B": next-history
+
+# PageUp and PageDown *also* work.
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+
+# Use \C-x( and \C-x) to record macro, and \C-xp to print
+# RHS of ":" to put in .inputrc.
+"\C-xp": print-last-kbd-macro
+
+"\C-xgs": "git stash push -S -m ''\C-b"
+
+"\C-xgc": "git commit -m ''\C-b"
+
+# Kill or copy the region between the mark (set by '\e ') and the point (current cursor).
+"\C-xrk": kill-region
+"\C-xrc": copy-region-as-kill
