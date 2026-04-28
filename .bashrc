@@ -14,8 +14,9 @@ _kxue43_set_man_pager
 # ------------------------------------------------------------------------
 # Readline settings
 
-# C-x C-e invokes NeoVim on the current command line.
-export EDITOR=nvim
+# C-x C-e invokes Vim on the current command line.
+# VSCode integrated terminal has some problem with NeoVim.
+export EDITOR=vim
 # ------------------------------------------------------------------------
 # Aliases
 

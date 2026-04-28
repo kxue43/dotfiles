@@ -15,5 +15,8 @@
 "\C-xgc": "git commit -m ''\C-b"
 
 # Kill or copy the region between the mark (set by '\e ') and the point (current cursor).
+# kill-region cuts the region. copy-region-as-kill only copies the region.
+# Use C-y to yank. After one yank, use M-y to rotate the yanked text.
+# M-y only shows effect when multiple blocks of texts have been cut or copied.
 "\C-xrk": kill-region
 "\C-xrc": copy-region-as-kill
