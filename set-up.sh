@@ -61,7 +61,7 @@ main() {
 
   # Clean up symlinks in ~/.local/bin
   for name in "${binaries[@]}"; do
-    if ! [ -x "$(readlink "$name")" ]; then
+    if ! [ -x "$(readlink -f "$name")" ]; then
       unlink "$name"
     fi
   done

@@ -91,7 +91,7 @@ tl() {
 
 dotfp() {
   local dotfiles_dir
-  dotfiles_dir="$(cd "$(dirname "$(readlink "${BASH_SOURCE[0]}")")" && pwd)"
+  dotfiles_dir="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
   echo "Pulling dot-file changes into $dotfiles_dir"
 

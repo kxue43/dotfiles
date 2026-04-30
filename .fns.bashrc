@@ -66,7 +66,7 @@ _kxue43_set_path() {
 
 _kxue43_enable_completion() {
   local dotfiles_dir
-  dotfiles_dir="$(cd "$(dirname "$(readlink "${BASH_SOURCE[0]}")")" && pwd)"
+  dotfiles_dir="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
   export BASH_COMPLETION_USER_DIR="$dotfiles_dir:$HOME/.local/share/bash-completion"
 
