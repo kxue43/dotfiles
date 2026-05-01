@@ -1,6 +1,6 @@
 .DS_Store
 *.zip
 /.git-prompt.sh
-/.creds.bashrc
+/creds.bashrc
 /.gitignore.override
 

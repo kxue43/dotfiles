@@ -182,11 +182,11 @@ _kxue43_bash_postinit() {
     ;;
   esac
 
-  if [[ ! -r "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc" ]]; then
-    echo "Env-specific .bashrc file '.${prefix}.bashrc' does not exist on hostname '$KXUE43_HOSTNAME'." >&2
+  if [[ ! -r "$KXUE43_DOTFILES_DIR/${prefix}.bashrc" ]]; then
+    echo "Env-specific .bashrc file '${prefix}.bashrc' does not exist on hostname '$KXUE43_HOSTNAME'." >&2
 
     return 1
   fi
 
-  source "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc"
+  source "$KXUE43_DOTFILES_DIR/${prefix}.bashrc"
 }

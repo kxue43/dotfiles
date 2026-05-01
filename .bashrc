@@ -5,7 +5,7 @@ KXUE43_DOTFILES_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && p
 export KXUE43_DOTFILES_DIR
 # -----------------------------------------------------------------------
 # Source personal library functions.
-source "$KXUE43_DOTFILES_DIR/.lib.bashrc"
+source "$KXUE43_DOTFILES_DIR/lib.sh"
 # -----------------------------------------------------------------------
 # Initialization
 
@@ -39,5 +39,5 @@ alias ls-path='printenv PATH | tr ":" "\n"'
 alias nvconfp='pushd ~/.config/nvim >/dev/null && git pull && popd >/dev/null'
 # ------------------------------------------------------------------------
 # Interactive functions
-source "$KXUE43_DOTFILES_DIR/.fns.bashrc"
+source "$KXUE43_DOTFILES_DIR/fns.sh"
 # ------------------------------------------------------------------------

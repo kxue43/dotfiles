@@ -1,7 +1,7 @@
 list-all() {
   local -a executables aliases
 
-  mapfile -t executables < <(grep "^[a-zA-Z0-9-]\+() {" "$KXUE43_DOTFILES_DIR/.fns.bashrc")
+  mapfile -t executables < <(grep "^[a-zA-Z0-9-]\+() {" "$KXUE43_DOTFILES_DIR/fns.sh")
 
   mapfile -t aliases < <(grep "^alias [a-zA-Z0-9-]\+=" "$KXUE43_DOTFILES_DIR/.bashrc")
 
@@ -19,10 +19,10 @@ list-all() {
     ;;
   esac
 
-  if [[ -r "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc" ]]; then
-    mapfile -t -O "${#executables[@]}" executables < <(grep "^[a-zA-Z0-9-]\+() {" "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc")
+  if [[ -r "$KXUE43_DOTFILES_DIR/${prefix}.bashrc" ]]; then
+    mapfile -t -O "${#executables[@]}" executables < <(grep "^[a-zA-Z0-9-]\+() {" "$KXUE43_DOTFILES_DIR/${prefix}.bashrc")
 
-    mapfile -t -O "${#executables[@]}" aliases < <(grep "^alias [a-zA-Z0-9-]\+=" "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc")
+    mapfile -t -O "${#executables[@]}" aliases < <(grep "^alias [a-zA-Z0-9-]\+=" "$KXUE43_DOTFILES_DIR/${prefix}.bashrc")
   fi
 
   executables=("${executables[@]%() \{}")
