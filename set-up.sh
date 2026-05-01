@@ -60,8 +60,11 @@ main() {
   mkdir -p "$HOME/.config/ghostty"
   mkdir -p "$HOME/.config/bat"
 
+  local dotfiles_dir
+  dotfiles_dir="$(cd "$(dirname "$(readlink "${BASH_SOURCE[0]}")")" && pwd)"
+
   # shellcheck disable=SC2034 # used via nameref
-  local -a tracked=(
+  local -a linked=(
     .bash_logout
     .bash_profile
     .bashrc
@@ -74,9 +77,9 @@ main() {
     .config/bat/config
   )
 
-  _log_info "Installing from $KXUE43_DOTFILES_DIR"
+  _log_info "Installing from $dotfiles_dir"
 
-  _link_files "$HOME" "$KXUE43_DOTFILES_DIR" "tracked"
+  _link_files "$HOME" "$dotfiles_dir" "linked"
 
   local local_bin="$HOME/.local/bin"
 
@@ -85,9 +88,9 @@ main() {
   local -a binaries
 
   # shellcheck disable=SC2034 # used via nameref
-  mapfile -t binaries < <(ls -1 "$KXUE43_DOTFILES_DIR/bin")
+  mapfile -t binaries < <(ls -1 "$dotfiles_dir/bin")
 
-  _link_files "$local_bin" "$KXUE43_DOTFILES_DIR/bin" "binaries"
+  _link_files "$local_bin" "$dotfiles_dir/bin" "binaries"
 
   mapfile -t binaries < <(find "$local_bin" -type l)
 
@@ -101,8 +104,8 @@ main() {
   done
 
   # Disable Git commit signing in devcontainer.
-  if [[ "$(whoami)" == "vscode" ]]; then
-    cat >"HOME/.gitconfig.override" <<'EOF'
+  if [[ "$(whoami)" == "vscode" && ! -r "$HOME/.gitconfig.override" ]]; then
+    cat >"$HOME/.gitconfig.override" <<'EOF'
 [user]
 	name = kxue43
 	email = xueke.kent@gmail.com
