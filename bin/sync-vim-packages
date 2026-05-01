@@ -17,7 +17,7 @@ main() {
 
     dir="$HOME/.vim/pack/$name/start/$name/"
 
-    if [ -d "$dir" ]; then
+    if [[ -d "$dir" ]]; then
       pushd "$dir" >/dev/null || return 1
       git pull --no-tags
       popd >/dev/null || return 1

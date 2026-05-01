@@ -19,7 +19,7 @@ list-all() {
     ;;
   esac
 
-  if [ -r "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc" ]; then
+  if [[ -r "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc" ]]; then
     mapfile -t -O "${#executables[@]}" executables < <(grep "^[a-zA-Z0-9-]\+() {" "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc")
 
     mapfile -t -O "${#executables[@]}" aliases < <(grep "^alias [a-zA-Z0-9-]\+=" "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc")
@@ -52,7 +52,7 @@ dotfp() {
 set-aws-region() {
   local region
 
-  if [ -n "${1:+x}" ]; then
+  if [[ -n "${1:+x}" ]]; then
     region=$1
   else
     region=$(_kxue43_prompt_aws_region "$KXUE43_AWS_REGIONS")
@@ -68,7 +68,7 @@ ls-aws-env() {
 }
 
 use-role-profile() {
-  if [ -n "${1:+x}" ]; then
+  if [[ -n "${1:+x}" ]]; then
     export AWS_PROFILE=$1
 
     return 0
@@ -81,7 +81,7 @@ use-role-profile() {
 set-role-env() {
   local profile
 
-  if [ -n "${1:+x}" ]; then
+  if [[ -n "${1:+x}" ]]; then
     profile=$1
   else
     profile=$(_kxue43_prompt_aws_profile "$KXUE43_AWS_PROFILE_PREFIX")
@@ -113,7 +113,7 @@ gtc() {
 }
 
 init-devcon-files() {
-  if ! [ -d "$KXUE43_DOTFILES_DIR/.devcontainer" ]; then
+  if [[ ! -d "$KXUE43_DOTFILES_DIR/.devcontainer" ]]; then
     echo "The $KXUE43_DOTFILES_DIR/.devcontainer/ folder does not exist." >&2
 
     return 1
@@ -176,7 +176,7 @@ rm-docker-images() {
   docker image rm "${tags[@]}"
 }
 
-if [ "$KXUE43_PLATFORM" = "Darwin" ]; then
+if [[ "$KXUE43_PLATFORM" == "Darwin" ]]; then
   ls-jdk() {
     /usr/libexec/java_home -V
   }

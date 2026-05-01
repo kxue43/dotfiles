@@ -93,7 +93,7 @@ main() {
 
   # Clean up symlinks in ~/.local/bin
   for name in "${binaries[@]}"; do
-    if ! [ -x "$(readlink -f "$name")" ]; then
+    if [[ ! -x "$(readlink -f "$name")" ]]; then
       _log_info "Script $name should no longer exist. Removing"
 
       unlink "$name"
@@ -101,7 +101,7 @@ main() {
   done
 
   # Disable Git commit signing in devcontainer.
-  if [ "$(whoami)" = "vscode" ]; then
+  if [[ "$(whoami)" == "vscode" ]]; then
     cat >"HOME/.gitconfig.override" <<'EOF'
 [user]
 	name = kxue43

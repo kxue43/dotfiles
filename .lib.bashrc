@@ -27,7 +27,7 @@ _kxue43_prompt_aws_profile() {
 _kxue43_prompt_aws_region() {
   local -a regions
 
-  if [ -z "${1:+x}" ]; then
+  if [[ -z "${1:+x}" ]]; then
     regions=(us-east-1 us-west-2)
   else
     mapfile -t -d : regions <<<"$1"
@@ -47,16 +47,16 @@ _kxue43_prompt_jdk_version() {
 
 _kxue43_set_path() {
   # For idempotency.
-  if [ -z "${KXUE43_SHELL_INIT+x}" ]; then
+  if [[ -z "${KXUE43_SHELL_INIT+x}" ]]; then
     export KXUE43_SHELL_INIT=1
 
     local own_path="$HOME/go/bin:$HOME/.cargo/bin:$HOME/.local/bin"
 
     PATH="$own_path:$PATH"
 
-    if [ -x /opt/local/bin/port ]; then
+    if [[ -x /opt/local/bin/port ]]; then
       PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-    elif [ -x /opt/homebrew/bin/brew ]; then
+    elif [[ -x /opt/homebrew/bin/brew ]]; then
       export HOMEBREW_FORBIDDEN_FORMULAE="openjdk"
 
       eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -67,18 +67,18 @@ _kxue43_set_path() {
 _kxue43_enable_completion() {
   export BASH_COMPLETION_USER_DIR="$KXUE43_DOTFILES_DIR:$HOME/.local/share/bash-completion"
 
-  if [ -x /opt/homebrew/bin/brew ]; then
+  if [[ -x /opt/homebrew/bin/brew ]]; then
     source /opt/homebrew/etc/profile.d/bash_completion.sh
 
     source /opt/homebrew/etc/bash_completion.d/git-prompt.sh
-  elif [ -x /opt/local/bin/port ]; then
+  elif [[ -x /opt/local/bin/port ]]; then
     source /opt/local/etc/profile.d/bash_completion.sh
 
     source /opt/local/share/git/git-prompt.sh
 
     # Activate completion manually for AWS CLI because it's not installed by port.
     complete -C '/usr/local/bin/aws_completer' aws
-  elif [ "$KXUE43_HOSTNAME" = "fedora" ]; then
+  elif [[ "$KXUE43_HOSTNAME" == "fedora" ]]; then
     # On Fedora Server, this file doesn't seem to be automatically sourced.
     source /etc/profile.d/bash_completion.sh
 
@@ -107,11 +107,11 @@ _kxue43_shell_integration() {
 
 _kxue43_activate_fnm() {
   # FNM is not used in devcontainers.
-  if [ "$KXUE43_USERNAME" = "vscode" ]; then
+  if [[ "$KXUE43_USERNAME" == "vscode" ]]; then
     return 0
   fi
 
-  if [ -z "${KXUE43_SHELL_INIT+x}" ]; then
+  if [[ -z "${KXUE43_SHELL_INIT+x}" ]]; then
     eval "$(fnm env --use-on-cd --shell bash)"
   else
     # Trim the duplicate fnm item in the middle of PATH if exists.
@@ -129,7 +129,7 @@ _kxue43_set_man_pager() {
   # not with the more modern ANSI escape codes. macOS only uses
   # backspace-based formatting. On Linux, we need to set GROFF_NO_SGR
   # to force it.
-  [ "$KXUE43_PLATFORM" = "Linux" ] && export GROFF_NO_SGR=1
+  [[ "$KXUE43_PLATFORM" == "Linux" ]] && export GROFF_NO_SGR=1
 }
 
 _kxue43_bash_init() {
@@ -172,7 +172,7 @@ _kxue43_bash_postinit() {
     prefix=gd
     ;;
   *)
-    if [ "$KXUE43_USERNAME" = "vscode" ]; then
+    if [[ "$KXUE43_USERNAME" == "vscode" ]]; then
       prefix=kxue43
     else
       echo "Unrecognized hostname '$KXUE43_HOSTNAME'. No env-specific .bashrc file for it." >&2
@@ -182,7 +182,7 @@ _kxue43_bash_postinit() {
     ;;
   esac
 
-  if ! [ -r "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc" ]; then
+  if [[ ! -r "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc" ]]; then
     echo "Env-specific .bashrc file '.${prefix}.bashrc' does not exist on hostname '$KXUE43_HOSTNAME'." >&2
 
     return 1

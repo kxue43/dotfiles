@@ -30,7 +30,7 @@ EOF
   fi
 
   local config_file="$HOME/.claude-headless.yaml"
-  if ! [ -r "$config_file" ]; then
+  if [[ ! -r "$config_file" ]]; then
     printf "\033[31m%s\033[0m\n" "The configuration file ~/.claude-headless.yaml does not exist." >&2
 
     return 1
@@ -50,7 +50,7 @@ EOF
   dotfiles_dir="$(cd "$(dirname "$bin_dir")" && pwd)"
 
   local dockerfile_dir="$dotfiles_dir/docker"
-  if ! [ -d "$dockerfile_dir" ]; then
+  if [[ ! -d "$dockerfile_dir" ]]; then
     printf "\033[31m%s\033[0m\n" "The directory for Claude sandbox Dockerfiles doesn't exist." >&2
 
     return 1
@@ -65,8 +65,8 @@ EOF
   local image_id
   image_id="$(docker image ls -q "$image")"
 
-  if [ -z "$image_id" ]; then
-    if ! [ -r "$dockerfile_dir/Dockerfile.${image}" ]; then
+  if [[ -z "$image_id" ]]; then
+    if [[ ! -r "$dockerfile_dir/Dockerfile.${image}" ]]; then
       printf "\033[31m%s\033[0m\n" "Dockerfile.${image} does not exist. Cannot build image." >&2
 
       return 1
@@ -79,7 +79,7 @@ EOF
     fi
   fi
 
-  if ! [ -d "$mount" ]; then
+  if [[ ! -d "$mount" ]]; then
     printf "\033[31m%s\033[0m\n" "The mount point folder '$mount' does not exist." >&2
 
     return 1

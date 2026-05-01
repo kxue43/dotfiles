@@ -7,7 +7,7 @@
 # Environment variables.
 
 # Java settings.
-if [ "$KXUE43_PLATFORM" = "Darwin" ]; then
+if [[ "$KXUE43_PLATFORM" == "Darwin" ]]; then
   JAVA_HOME=$(/usr/libexec/java_home -v 21)
   export JAVA_HOME
 fi

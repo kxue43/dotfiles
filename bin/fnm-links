@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 _clean() {
-  if ! [ "$(uname -s)" = "Darwin" ]; then
+  if [[ "$(uname -s)" != "Darwin" ]]; then
     printf "\033[31m%s\033[0m\n" "Only use this function on macOS."
 
     return 1
   fi
 
-  if [ -n "${FNM_MULTISHELL_PATH:+x}" ]; then
+  if [[ -n "${FNM_MULTISHELL_PATH:+x}" ]]; then
     printf "\033[36m%s\033[0m\n" "Cleaning up the $HOME/.local/state/fnm_multishells directory of symlinks older than ${1}."
 
     find "$(dirname "${FNM_MULTISHELL_PATH}")/" -type l -name '*_*' -mtime "+${1}" -exec rm {} +
@@ -18,11 +18,11 @@ _count() {
   local fnm_multishell_dir
   fnm_multishell_dir="$(dirname "$FNM_MULTISHELL_PATH"/)"
 
-  [ -d "$fnm_multishell_dir" ] && find "$fnm_multishell_dir" -type l | wc -l
+  [[ -d "$fnm_multishell_dir" ]] && find "$fnm_multishell_dir" -type l | wc -l
 }
 
 _list() {
-  if [ -z "${FNM_MULTISHELL_PATH:+x}" ] || ! [ -d "$(dirname "$FNM_MULTISHELL_PATH")" ]; then
+  if [[ -z "${FNM_MULTISHELL_PATH:+x}" || ! -d "$(dirname "$FNM_MULTISHELL_PATH")" ]]; then
     printf "\033[31m%s\033[0m\n" "The FNM_MULTISHELL_PATH environment variable does not have a valid value."
 
     return 1

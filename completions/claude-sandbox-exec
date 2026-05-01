@@ -7,7 +7,7 @@ _claude_sandbox_exec() {
     COMPREPLY=("-h")
 
     return 0
-  elif ! [ -r "$config_file" ]; then
+  elif [[ ! -r "$config_file" ]]; then
     return 0
   else
     compgen -V COMPREPLY -W "$(yq '.projects | keys | join(" ")' "$config_file")" -- "$2"
