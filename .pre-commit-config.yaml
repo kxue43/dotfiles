@@ -10,7 +10,7 @@ repos:
       - id: shell-cmd-on-change
         name: set-up
         args:
-          - "-Pset-up.sh"
+          - "-P.keep"
           - "~/.config/dotfiles/set-up.sh"
         stages: [post-merge]
         always_run: true

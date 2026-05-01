@@ -46,10 +46,10 @@ EOF
   local bin_dir
   bin_dir="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
-  local dotfile_dir
-  dotfile_dir="$(cd "$(dirname "$bin_dir")" && pwd)"
+  local dotfiles_dir
+  dotfiles_dir="$(cd "$(dirname "$bin_dir")" && pwd)"
 
-  local dockerfile_dir="$dotfile_dir/docker"
+  local dockerfile_dir="$dotfiles_dir/docker"
   if ! [ -d "$dockerfile_dir" ]; then
     printf "\033[31m%s\033[0m\n" "The directory for Claude sandbox Dockerfiles doesn't exist." >&2
 

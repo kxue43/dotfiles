@@ -1,11 +1,5 @@
 # Reusable private functions.
 
-_kxue43_bash_init() {
-  KXUE43_PLATFORM="$(uname -s)"
-
-  export KXUE43_PLATFORM
-}
-
 _kxue43_prompt() {
   local chosen
 
@@ -71,10 +65,7 @@ _kxue43_set_path() {
 }
 
 _kxue43_enable_completion() {
-  local dotfiles_dir
-  dotfiles_dir="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
-
-  export BASH_COMPLETION_USER_DIR="$dotfiles_dir:$HOME/.local/share/bash-completion"
+  export BASH_COMPLETION_USER_DIR="$KXUE43_DOTFILES_DIR:$HOME/.local/share/bash-completion"
 
   if [ -x /opt/homebrew/bin/brew ]; then
     source /opt/homebrew/etc/profile.d/bash_completion.sh
@@ -87,7 +78,7 @@ _kxue43_enable_completion() {
 
     # Activate completion manually for AWS CLI because it's not installed by port.
     complete -C '/usr/local/bin/aws_completer' aws
-  elif [ "$(hostname)" = "fedora" ]; then
+  elif [ "$KXUE43_HOSTNAME" = "fedora" ]; then
     # On Fedora Server, this file doesn't seem to be automatically sourced.
     source /etc/profile.d/bash_completion.sh
 
@@ -116,7 +107,7 @@ _kxue43_shell_integration() {
 
 _kxue43_activate_fnm() {
   # FNM is not used in devcontainers.
-  if [ "$(whoami)" = "vscode" ]; then
+  if [ "$KXUE43_USERNAME" = "vscode" ]; then
     return 0
   fi
 
@@ -138,13 +129,39 @@ _kxue43_set_man_pager() {
   # not with the more modern ANSI escape codes. macOS only uses
   # backspace-based formatting. On Linux, we need to set GROFF_NO_SGR
   # to force it.
-  [ "$(uname -s)" = "Linux" ] && export GROFF_NO_SGR=1
+  [ "$KXUE43_PLATFORM" = "Linux" ] && export GROFF_NO_SGR=1
 }
 
-_kxue43_source_env_bashrc() {
+_kxue43_bash_init() {
+  # Set up custom env vars.
+  KXUE43_PLATFORM="$(uname -s)"
+
+  export KXUE43_PLATFORM
+
+  KXUE43_HOSTNAME="$(hostname)"
+
+  export KXUE43_HOSTNAME
+
+  KXUE43_USERNAME="$(whoami)"
+
+  export KXUE43_USERNAME
+
+  # Perform initialization.
+  _kxue43_set_path
+
+  _kxue43_activate_fnm
+
+  _kxue43_enable_completion
+
+  _kxue43_shell_integration
+
+  _kxue43_set_man_pager
+}
+
+_kxue43_bash_postinit() {
   local prefix
 
-  case "$(hostname)" in
+  case "$KXUE43_HOSTNAME" in
   love66* | fedora)
     prefix=kxue43
     ;;
@@ -155,21 +172,21 @@ _kxue43_source_env_bashrc() {
     prefix=gd
     ;;
   *)
-    if [ "$(whoami)" = "vscode" ]; then
+    if [ "$KXUE43_USERNAME" = "vscode" ]; then
       prefix=kxue43
     else
-      echo "Unrecognized hostname '$(hostname)'. No env-specific .bashrc file for it." >&2
+      echo "Unrecognized hostname '$KXUE43_HOSTNAME'. No env-specific .bashrc file for it." >&2
 
       return 1
     fi
     ;;
   esac
 
-  if ! [ -r "$HOME/.${prefix}.bashrc" ]; then
-    echo "Env-specific .bashrc file '.${prefix}.bashrc' does not exist on hostname '$(hostname)'." >&2
+  if ! [ -r "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc" ]; then
+    echo "Env-specific .bashrc file '.${prefix}.bashrc' does not exist on hostname '$KXUE43_HOSTNAME'." >&2
 
     return 1
   fi
 
-  source "$HOME/.${prefix}.bashrc"
+  source "$KXUE43_DOTFILES_DIR/.${prefix}.bashrc"
 }

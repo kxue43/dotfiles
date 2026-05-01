@@ -2,12 +2,12 @@
 # Secret environment variables.
 
 # Source credentials from untracked file if exists.
-[ -r "$HOME/.creds.bashrc" ] && source "$HOME/.creds.bashrc"
+[ -r "$KXUE43_DOTFILES_DIR/.creds.bashrc" ] && source "$KXUE43_DOTFILES_DIR/.creds.bashrc"
 # ------------------------------------------------------------------------
 # Environment variables.
 
 # Java settings.
-if [ "$(uname -s)" = "Darwin" ]; then
+if [ "$KXUE43_PLATFORM" = "Darwin" ]; then
   JAVA_HOME=$(/usr/libexec/java_home -v 21)
   export JAVA_HOME
 fi
