@@ -1,5 +1,11 @@
 # Reusable private functions.
 
+_kxue43_bash_init() {
+  KXUE43_PLATFORM="$(uname -s)"
+
+  export KXUE43_PLATFORM
+}
+
 _kxue43_prompt() {
   local chosen
 

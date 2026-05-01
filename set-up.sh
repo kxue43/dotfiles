@@ -16,7 +16,7 @@ main() {
     .bash_profile
     .bashrc
     .inputrc
-    .fns.bashrc
+    .lib.bashrc
     .kxue43.bashrc
     .ascd.bashrc
     .gitconfig
