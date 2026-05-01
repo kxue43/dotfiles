@@ -7,7 +7,7 @@ if [[ -z "${KXUE43_DOTFILES_DIR:+x}" ]]; then
 fi
 # -----------------------------------------------------------------------
 # Source personal library functions.
-source "$KXUE43_DOTFILES_DIR/lib.sh"
+source "$KXUE43_DOTFILES_DIR/interactive-lib.sh"
 # -----------------------------------------------------------------------
 # Initialization
 

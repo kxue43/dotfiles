@@ -1,3 +1,5 @@
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/bin-lib.sh"
+
 list-all() {
   local -a executables aliases
 
@@ -168,9 +170,8 @@ rm-docker-images() {
 
     return 0
   else
-    printf "\033[36m%s\033[0m\n" "The following images are selected:"
-    printf "\033[36m%s\033[0m\n" "${tags[@]}"
-    printf "\n"
+    _kxue43_log_info "The following images are selected:"
+    _kxue43_log_info "${tags[@]}" "\n"
   fi
 
   docker image rm "${tags[@]}"

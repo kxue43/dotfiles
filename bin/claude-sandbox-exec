@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/../bin-lib.sh"
+
 main() {
   if [[ "$1" == "-h" ]]; then
     cat <<EOF
@@ -24,21 +26,21 @@ EOF
   fi
 
   if ! docker --version &>/dev/null; then
-    printf "\033[31m%s\033[0m\n" "docker is not available." >&2
+    _kxue43_log_error "docker is not available."
 
     return 1
   fi
 
   local config_file="$HOME/.claude-headless.yaml"
   if [[ ! -r "$config_file" ]]; then
-    printf "\033[31m%s\033[0m\n" "The configuration file ~/.claude-headless.yaml does not exist." >&2
+    _kxue43_log_error "The configuration file ~/.claude-headless.yaml does not exist."
 
     return 1
   fi
 
   local project="$1"
   if [[ "$(yq ".projects.${project}" "$config_file")" == "null" ]]; then
-    printf "\033[31m%s\033[0m\n" "Project '${project}' does not exist in ~/.claude-headless.yaml." >&2
+    _kxue43_log_error "Project '${project}' does not exist in ~/.claude-headless.yaml."
 
     return 1
   fi
@@ -51,7 +53,7 @@ EOF
 
   local dockerfile_dir="$dotfiles_dir/docker"
   if [[ ! -d "$dockerfile_dir" ]]; then
-    printf "\033[31m%s\033[0m\n" "The directory for Claude sandbox Dockerfiles doesn't exist." >&2
+    _kxue43_log_error "The directory for Claude sandbox Dockerfiles doesn't exist."
 
     return 1
   fi
@@ -67,12 +69,12 @@ EOF
 
   if [[ -z "$image_id" ]]; then
     if [[ ! -r "$dockerfile_dir/Dockerfile.${image}" ]]; then
-      printf "\033[31m%s\033[0m\n" "Dockerfile.${image} does not exist. Cannot build image." >&2
+      _kxue43_log_error "Dockerfile.${image} does not exist. Cannot build image."
 
       return 1
     fi
 
-    printf "\033[36m%s\033[0m\n" "Docker image '$image' does not exist. Building..."
+    _kxue43_log_info "Docker image '$image' does not exist. Building..."
 
     if ! (cd "$dockerfile_dir" && docker build -t "$image" -f "Dockerfile.${image}" .); then
       return 1
@@ -80,31 +82,31 @@ EOF
   fi
 
   if [[ ! -d "$mount" ]]; then
-    printf "\033[31m%s\033[0m\n" "The mount point folder '$mount' does not exist." >&2
+    _kxue43_log_error "The mount point folder '$mount' does not exist."
 
     return 1
   fi
 
   if [[ "$workdir" != "null" ]] && [[ "$workdir" == /* ]]; then
-    printf "\033[31m%s\033[0m\n" "workdir must be relative to mount, but it is '$workdir'." >&2
+    _kxue43_log_error "workdir must be relative to mount, but it is '$workdir'."
 
     return 1
   fi
 
   if [[ "$workdir" != "null" ]] && [[ "$workdir" == *..* ]]; then
-    printf "\033[31m%s\033[0m\n" "workdir must not contain '..'." >&2
+    _kxue43_log_error "workdir must not contain '..'."
 
     return 1
   fi
 
   if [[ "$workdir" != "null" ]] && ! [[ -d "$mount/$workdir" ]]; then
-    printf "\033[31m%s\033[0m\n" "The workdir '$workdir' cannot be resolved against mount point '$mount'." >&2
+    _kxue43_log_error "The workdir '$workdir' cannot be resolved against mount point '$mount'."
 
     return 1
   fi
 
   if [[ "$prompt" == "null" ]]; then
-    printf "\033[31m%s\033[0m\n" "Prompt must not be empty." >&2
+    _kxue43_log_error "Prompt must not be empty."
 
     return 1
   fi
@@ -119,7 +121,7 @@ EOF
 
   local token
   if ! token="$(security find-generic-password -s "kxue43-claude-cli" -a "oauth-token-1y" -w)"; then
-    printf "\033[31m%s\033[0m\n" "Failed to get CLAUDE_CODE_OAUTH_TOKEN from KeyChain access." >&2
+    _kxue43_log_error "Failed to get CLAUDE_CODE_OAUTH_TOKEN from KeyChain access."
 
     return 1
   fi

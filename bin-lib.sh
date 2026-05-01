@@ -1,0 +1,15 @@
+_kxue43_log_error() {
+  if [[ -t 2 ]]; then
+    printf "\033[31m%s\033[0m\n" "$@" >&2
+  else
+    printf "%s\n" "$@" >&2
+  fi
+}
+
+_kxue43_log_info() {
+  if [[ -t 1 ]]; then
+    printf "\033[36m%s\033[0m\n" "$@"
+  else
+    printf "%s\n" "$@"
+  fi
+}

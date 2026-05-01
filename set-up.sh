@@ -2,21 +2,7 @@
 
 set -eu -o pipefail
 
-_log_error() {
-  if [[ -t 2 ]]; then
-    printf "\033[31m%s\033[0m\n" "$1" >&2
-  else
-    echo "$1" >&2
-  fi
-}
-
-_log_info() {
-  if [[ -t 1 ]]; then
-    printf "\033[36m%s\033[33m%s\033[36m.\033[0m\n" "$@"
-  else
-    echo "${*}"
-  fi
-}
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/bin-lib.sh"
 
 # Create symlinks in source_dir and point them to actual files in sink_dir.
 # Args:

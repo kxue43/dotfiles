@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/../bin-lib.sh"
+
 _clean() {
   if [[ "$(uname -s)" != "Darwin" ]]; then
-    printf "\033[31m%s\033[0m\n" "Only use this function on macOS."
+    _kxue43_log_error "Only use this function on macOS."
 
     return 1
   fi
 
   if [[ -n "${FNM_MULTISHELL_PATH:+x}" ]]; then
-    printf "\033[36m%s\033[0m\n" "Cleaning up the $HOME/.local/state/fnm_multishells directory of symlinks older than ${1}."
+    _kxue43_log_info "Cleaning up the $HOME/.local/state/fnm_multishells directory of symlinks older than ${1}."
 
     find "$(dirname "${FNM_MULTISHELL_PATH}")/" -type l -name '*_*' -mtime "+${1}" -exec rm {} +
   fi
@@ -23,7 +25,7 @@ _count() {
 
 _list() {
   if [[ -z "${FNM_MULTISHELL_PATH:+x}" || ! -d "$(dirname "$FNM_MULTISHELL_PATH")" ]]; then
-    printf "\033[31m%s\033[0m\n" "The FNM_MULTISHELL_PATH environment variable does not have a valid value."
+    _kxue43_log_error "The FNM_MULTISHELL_PATH environment variable does not have a valid value."
 
     return 1
   fi
@@ -66,7 +68,7 @@ EOF
     _list "$@"
     ;;
   *)
-    printf "\033[36m%s\033[0m\n" "fnm-links requires a subcommand - list, count or clean."
+    _kxue43_log_info "fnm-links requires a subcommand - list, count or clean."
 
     return 1
     ;;
