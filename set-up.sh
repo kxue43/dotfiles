@@ -23,13 +23,13 @@ _link_files() {
         # If already correctly symlinked, continue.
         continue
       else
-        _log_info "$name is symlinked to $target_now. Removing"
+        _kxue43_log_info "$name is symlinked to $target_now. Removing"
 
         unlink "$1/$name"
       fi
     elif [[ -f "$1/$name" ]]; then
       # If the ln target already exists as a regular file, remove it.
-      _log_info "Removing existing file $name"
+      _kxue43_log_info "Removing existing file $name"
 
       rm "$1/$name"
     fi
@@ -37,7 +37,7 @@ _link_files() {
     # If execution reaches here, create the correct symlink.
     ln -s "$2/$name" "$1/$name"
 
-    _log_info "$name has been correctly symlinked"
+    _kxue43_log_info "$name has been correctly symlinked"
   done
 }
 
@@ -63,7 +63,7 @@ main() {
     .config/bat/config
   )
 
-  _log_info "Installing from $dotfiles_dir"
+  _kxue43_log_info "Installing from $dotfiles_dir"
 
   _link_files "$HOME" "$dotfiles_dir" "linked"
 
@@ -83,7 +83,7 @@ main() {
   # Clean up symlinks in ~/.local/bin
   for name in "${binaries[@]}"; do
     if [[ ! -x "$(readlink -f "$name")" ]]; then
-      _log_info "Script $name should no longer exist. Removing"
+      _kxue43_log_info "Script $name should no longer exist. Removing"
 
       unlink "$name"
     fi
