@@ -1,8 +1,10 @@
 # -----------------------------------------------------------------------
 # Locate dotfiles directory
-KXUE43_DOTFILES_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+if [[ -z "${KXUE43_DOTFILES_DIR:+x}" ]]; then
+  KXUE43_DOTFILES_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
-export KXUE43_DOTFILES_DIR
+  export KXUE43_DOTFILES_DIR
+fi
 # -----------------------------------------------------------------------
 # Source personal library functions.
 source "$KXUE43_DOTFILES_DIR/lib.sh"

@@ -134,17 +134,23 @@ _kxue43_set_man_pager() {
 
 _kxue43_bash_init() {
   # Set up custom env vars.
-  KXUE43_PLATFORM="$(uname -s)"
+  if [[ -z "${KXUE43_PLATFORM:+x}" ]]; then
+    KXUE43_PLATFORM="$(uname -s)"
 
-  export KXUE43_PLATFORM
+    export KXUE43_PLATFORM
+  fi
 
-  KXUE43_HOSTNAME="$(hostname)"
+  if [[ -z "${KXUE43_HOSTNAME:+x}" ]]; then
+    KXUE43_HOSTNAME="$(hostname)"
 
-  export KXUE43_HOSTNAME
+    export KXUE43_HOSTNAME
+  fi
 
-  KXUE43_USERNAME="$(whoami)"
+  if [[ -z "${KXUE43_USERNAME:+x}" ]]; then
+    KXUE43_USERNAME="$(whoami)"
 
-  export KXUE43_USERNAME
+    export KXUE43_USERNAME
+  fi
 
   # Perform initialization.
   _kxue43_set_path
