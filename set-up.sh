@@ -30,12 +30,7 @@ _link_files() {
   local name target_now
 
   for name in "${base_names[@]}"; do
-    if [[ -f "$1/$name" ]]; then
-      # If the ln target already exists as a regular file, remove it.
-      _log_info "Removing existing file $name"
-
-      rm "$1/$name"
-    elif [[ -L "$1/$name" ]]; then
+    if [[ -L "$1/$name" ]]; then
       target_now="$(readlink -f "$1/$name")"
 
       if [[ "$2/$name" -ef "$target_now" ]]; then
@@ -46,6 +41,11 @@ _link_files() {
 
         unlink "$1/$name"
       fi
+    elif [[ -f "$1/$name" ]]; then
+      # If the ln target already exists as a regular file, remove it.
+      _log_info "Removing existing file $name"
+
+      rm "$1/$name"
     fi
 
     # If execution reaches here, create the correct symlink.
