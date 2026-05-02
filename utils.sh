@@ -1,8 +1,10 @@
-if [[ -n "${_kxue43_module_set_bin_lib+x}" ]]; then
+# Utility functions for both interactive shell and scripting.
+
+if [[ -n "${_kxue43_module_set_utils+x}" ]]; then
   return
 fi
 
-_kxue43_module_set_bin_lib=1
+_kxue43_module_set_utils=1
 
 _kxue43_log_error() {
   if [[ -t 2 ]]; then

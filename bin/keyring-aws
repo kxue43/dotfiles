@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/../bin-lib.sh"
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/../utils.sh"
 
 # Args:
 # * $1 - AWS profile name

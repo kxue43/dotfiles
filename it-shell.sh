@@ -1,10 +1,12 @@
-if [[ -n "${_kxue43_module_set_interactive_lib+x}" ]]; then
+# Reusable functions for interactive shell (i.e. not scripting).
+
+if [[ -n "${_kxue43_module_set_it_shell+x}" ]]; then
   return
 fi
 
-_kxue43_module_set_interactive_lib=1
+_kxue43_module_set_it_shell=1
 
-source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/bin-lib.sh"
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/utils.sh"
 
 _kxue43_prompt() {
   local chosen

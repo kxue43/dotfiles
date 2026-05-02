@@ -7,7 +7,7 @@ if [[ -z "${KXUE43_DOTFILES_DIR:+x}" ]]; then
 fi
 # -----------------------------------------------------------------------
 # Source personal library functions.
-source "$KXUE43_DOTFILES_DIR/interactive-lib.sh"
+source "$KXUE43_DOTFILES_DIR/it-shell.sh"
 # -----------------------------------------------------------------------
 # Initialization
 
@@ -40,6 +40,6 @@ alias gci='aws sts get-caller-identity'
 alias ls-path='printenv PATH | tr ":" "\n"'
 alias nvconfp='pushd ~/.config/nvim >/dev/null && git pull && popd >/dev/null'
 # ------------------------------------------------------------------------
-# Interactive functions
-source "$KXUE43_DOTFILES_DIR/fns.sh"
+# Load custom commands for interactive use.
+source "$KXUE43_DOTFILES_DIR/commands.sh"
 # ------------------------------------------------------------------------

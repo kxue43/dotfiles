@@ -1,15 +1,15 @@
-if [[ -n "${_kxue43_module_set_fns+x}" ]]; then
+if [[ -n "${_kxue43_module_set_commands+x}" ]]; then
   return
 fi
 
-_kxue43_module_set_fns=1
+_kxue43_module_set_commands=1
 
-source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/bin-lib.sh"
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/utils.sh"
 
 list-all() {
   local -a executables aliases
 
-  mapfile -t executables < <(grep "^[a-zA-Z0-9-]\+() {" "$KXUE43_DOTFILES_DIR/fns.sh")
+  mapfile -t executables < <(grep "^[a-zA-Z0-9-]\+() {" "$KXUE43_DOTFILES_DIR/commands.sh")
 
   mapfile -t aliases < <(grep "^alias [a-zA-Z0-9-]\+=" "$KXUE43_DOTFILES_DIR/.bashrc")
 

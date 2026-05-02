@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/../bin-lib.sh"
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/../utils.sh"
 
 main() {
   if [[ "$1" == "-h" ]]; then
