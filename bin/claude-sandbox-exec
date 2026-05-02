@@ -20,7 +20,7 @@ EOF
   fi
 
   if (($# == 0)); then
-    echo "The positional argument PROJECT is required." >&2
+    _kxue43_log_error "The positional argument PROJECT is required."
 
     return 1
   fi

@@ -2,6 +2,8 @@
 
 set -eu -o pipefail
 
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/../bin-lib.sh"
+
 # Args:
 # - $1: Project directory to start nvim in.
 # - $2 (optional): Whether to start new Tmux session detached.
@@ -19,7 +21,7 @@ _create_one() {
 
 main() {
   if (($# == 0)); then
-    echo "tn requires at least one argument." >&2
+    _kxue43_log_error "tn requires at least one argument."
 
     return 1
   fi

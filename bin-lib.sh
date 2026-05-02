@@ -1,3 +1,9 @@
+if [[ -n "${_kxue43_module_set_bin_lib+x}" ]]; then
+  return
+fi
+
+_kxue43_module_set_bin_lib=1
+
 _kxue43_log_error() {
   if [[ -t 2 ]]; then
     printf "\033[31m%s\033[0m\n" "$@" >&2

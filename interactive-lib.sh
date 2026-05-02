@@ -1,10 +1,16 @@
-# Reusable private functions.
+if [[ -n "${_kxue43_module_set_interactive_lib+x}" ]]; then
+  return
+fi
+
+_kxue43_module_set_interactive_lib=1
+
+source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/bin-lib.sh"
 
 _kxue43_prompt() {
   local chosen
 
   select chosen in "$@"; do
-    echo "Chose $chosen." >&2
+    _kxue43_log_info "Chose $chosen." >&2
 
     break
   done
@@ -181,7 +187,7 @@ _kxue43_bash_postinit() {
     if [[ "$KXUE43_USERNAME" == "vscode" ]]; then
       prefix=kxue43
     else
-      echo "Unrecognized hostname '$KXUE43_HOSTNAME'. No env-specific .bashrc file for it." >&2
+      _kxue43_log_error "Unrecognized hostname '$KXUE43_HOSTNAME'. No env-specific .bashrc file for it."
 
       return 1
     fi
@@ -189,7 +195,7 @@ _kxue43_bash_postinit() {
   esac
 
   if [[ ! -r "$KXUE43_DOTFILES_DIR/${prefix}.bashrc" ]]; then
-    echo "Env-specific .bashrc file '${prefix}.bashrc' does not exist on hostname '$KXUE43_HOSTNAME'." >&2
+    _kxue43_log_error "Env-specific .bashrc file '${prefix}.bashrc' does not exist on hostname '$KXUE43_HOSTNAME'."
 
     return 1
   fi

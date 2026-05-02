@@ -1,3 +1,9 @@
+if [[ -n "${_kxue43_module_set_fns+x}" ]]; then
+  return
+fi
+
+_kxue43_module_set_fns=1
+
 source "$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)/bin-lib.sh"
 
 list-all() {
@@ -42,7 +48,7 @@ tl() {
 }
 
 dotfp() {
-  echo "Pulling dot-file changes into $KXUE43_DOTFILES_DIR"
+  _kxue43_log_info "Pulling dot-file changes into $KXUE43_DOTFILES_DIR"
 
   pushd "$KXUE43_DOTFILES_DIR" >/dev/null || return 1
 
@@ -116,12 +122,12 @@ gtc() {
 
 init-devcon-files() {
   if [[ ! -d "$KXUE43_DOTFILES_DIR/.devcontainer" ]]; then
-    echo "The $KXUE43_DOTFILES_DIR/.devcontainer/ folder does not exist." >&2
+    _kxue43_log_error "The $KXUE43_DOTFILES_DIR/.devcontainer/ folder does not exist."
 
     return 1
   fi
 
-  echo "Creating .devcontainer/ folder in the current working directory."
+  _kxue43_log_info "Creating .devcontainer/ folder in the current working directory."
 
   cp -R "$KXUE43_DOTFILES_DIR/.devcontainer/" ./.devcontainer/
 }
@@ -147,7 +153,7 @@ rm-cdk-images() {
   mapfile -t tags < <(docker images --filter "reference=cdkasset-*:latest" --format "{{.Repository}}:{{.Tag}}")
 
   if ((${#tags[@]} == 0)); then
-    echo "No existing CDK asset images."
+    _kxue43_log_info "No existing CDK asset images."
 
     return 0
   fi
@@ -166,7 +172,7 @@ rm-docker-images() {
   mapfile -t tags < <(docker images --format "{{.Repository}}:{{.Tag}}" | fzf -m)
 
   if ((${#tags[@]} == 0)); then
-    echo "No image selected."
+    _kxue43_log_info "No image selected."
 
     return 0
   else
