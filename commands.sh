@@ -132,22 +132,6 @@ init-devcon-files() {
   cp -R "$KXUE43_DOTFILES_DIR/.devcontainer/" ./.devcontainer/
 }
 
-mcpgw-update-key() {
-  local token
-  token="$(pbpaste)"
-
-  local backup_dir="$HOME/temp/save/claude"
-  ! [[ -d "$backup_dir" ]] && mkdir -p "$backup_dir"
-
-  local backup_file="$backup_dir/.claude.json.bak"
-
-  [[ -f "$backup_file" ]] && rm "$backup_file"
-
-  mv "$HOME/.claude.json" "$backup_file"
-
-  TOKEN="${token}" jq '.mcpServers.mcpgw.headers.Authorization = "Bearer " + env.TOKEN' --indent 2 "$backup_file" >"$HOME/.claude.json"
-}
-
 rm-cdk-images() {
   local tags
   mapfile -t tags < <(docker images --filter "reference=cdkasset-*:latest" --format "{{.Repository}}:{{.Tag}}")
