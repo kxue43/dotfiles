@@ -23,6 +23,7 @@ export KXUE43_AWS_REGIONS="us-east-1"
 # Aliases.
 
 alias gs='git status'
+alias nk9s='tmux new -s k9s'
 # ------------------------------------------------------------------------
 # Functions.
 
